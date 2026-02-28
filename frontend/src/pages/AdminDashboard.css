@@ -1,0 +1,67 @@
+.admin-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.admin-form-card h2,
+.admin-list h2 {
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+  color: var(--navy);
+}
+
+.admin-form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-candidate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+}
+
+.admin-candidate > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.admin-candidate-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.party-badge {
+  background: var(--navy);
+  color: var(--white);
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.empty-msg {
+  text-align: center;
+  color: var(--text-light);
+  padding: 40px 0;
+}
+
+@media (max-width: 768px) {
+  .admin-grid {
+    grid-template-columns: 1fr;
+  }
+}

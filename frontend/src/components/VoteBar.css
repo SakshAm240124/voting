@@ -1,0 +1,34 @@
+.vote-bar-row {
+  margin-bottom: 16px;
+}
+
+.vote-bar-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.vote-bar-party {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.vote-bar-count {
+  color: var(--text-light);
+  font-size: 0.85rem;
+}
+
+.vote-bar-track {
+  background: var(--border);
+  border-radius: 6px;
+  height: 28px;
+  overflow: hidden;
+}
+
+.vote-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--saffron), var(--green));
+  border-radius: 6px;
+  min-width: 4px;
+  transition: width 0.6s ease;
+}

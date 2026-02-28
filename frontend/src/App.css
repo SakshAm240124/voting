@@ -1,0 +1,10 @@
+/* Tricolor stripe at top of page */
+.tricolor-stripe {
+  height: 4px;
+  background: linear-gradient(to right, var(--saffron) 33%, var(--white) 33%, var(--white) 66%, var(--green) 66%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}

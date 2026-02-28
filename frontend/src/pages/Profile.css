@@ -1,0 +1,45 @@
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.profile-info h2,
+.profile-grid .card h2 {
+  font-size: 1.15rem;
+  margin-bottom: 20px;
+  color: var(--navy);
+}
+
+.profile-field {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.93rem;
+}
+
+.profile-field:last-child {
+  border-bottom: none;
+}
+
+.profile-label {
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.role-badge {
+  background: var(--navy);
+  color: var(--white);
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+@media (max-width: 768px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}

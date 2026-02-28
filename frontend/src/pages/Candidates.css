@@ -1,0 +1,17 @@
+.candidates-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.empty-msg {
+  text-align: center;
+  color: var(--text-light);
+  padding: 40px 0;
+}
+
+@media (max-width: 768px) {
+  .candidates-grid {
+    grid-template-columns: 1fr;
+  }
+}

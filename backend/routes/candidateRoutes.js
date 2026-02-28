@@ -21,7 +21,7 @@ router.post('/', jwtAuthMiddleware, async (req, res) =>{
         if(!(await checkAdminRole(req.user.id)))
             return res.status(403).json({message: 'user does not have admin role'});
 
-        const data = req.body 
+        const data = req.body
         const newCandidate = new Candidate(data);
 
         // Save the new user to the database
@@ -37,11 +37,11 @@ router.post('/', jwtAuthMiddleware, async (req, res) =>{
 
 router.put('/:candidateID', jwtAuthMiddleware, async (req, res)=>{
     try{
-        if(!checkAdminRole(req.user.id))
+        if(!(await checkAdminRole(req.user.id)))
             return res.status(403).json({message: 'user does not have admin role'});
-        
-        const candidateID = req.params.candidateID; 
-        const updatedCandidateData = req.body; 
+
+        const candidateID = req.params.candidateID;
+        const updatedCandidateData = req.body;
 
         const response = await Candidate.findByIdAndUpdate(candidateID, updatedCandidateData, {
             new: true, // Return the updated document
@@ -62,9 +62,9 @@ router.put('/:candidateID', jwtAuthMiddleware, async (req, res)=>{
 
 router.delete('/:candidateID', jwtAuthMiddleware, async (req, res)=>{
     try{
-        if(!checkAdminRole(req.user.id))
+        if(!(await checkAdminRole(req.user.id)))
             return res.status(403).json({message: 'user does not have admin role'});
-        
+
         const candidateID = req.params.candidateID; // Extract the id from the URL parameter
 
         const response = await Candidate.findByIdAndDelete(candidateID);
@@ -81,11 +81,32 @@ router.delete('/:candidateID', jwtAuthMiddleware, async (req, res)=>{
     }
 })
 
+// vote count (MUST be above /vote/:candidateID to avoid "count" matching as candidateID)
+router.get('/vote/count', async (req, res) => {
+    try{
+        // Find all candidates and sort them by votecount in descending order
+        const candidate = await Candidate.find().sort({votecount: 'desc'});
+
+        // Map the candidates to only return their name and votecount
+        const voteRecord = candidate.map((data)=>{
+            return {
+                party: data.party,
+                count: data.votecount
+            }
+        });
+
+        return res.status(200).json(voteRecord);
+    }catch(err){
+        console.log(err);
+        res.status(500).json({error: 'Internal Server Error'});
+    }
+});
+
 // let's start voting
 router.get('/vote/:candidateID', jwtAuthMiddleware, async (req, res)=>{
     // no admin can vote
     // user can only vote once
-    
+
     candidateID = req.params.candidateID;
     userId = req.user.id;
 
@@ -103,17 +124,17 @@ router.get('/vote/:candidateID', jwtAuthMiddleware, async (req, res)=>{
         if(user.role == 'admin'){
             return res.status(403).json({ message: 'admin is not allowed'});
         }
-        if(user.isVoted){
+        if(user.isvoted){
             return res.status(400).json({ message: 'You have already voted' });
         }
 
         // Update the Candidate document to record the vote
         candidate.votes.push({user: userId})
-        candidate.voteCount++;
+        candidate.votecount++;
         await candidate.save();
 
         // update the user document
-        user.isVoted = true
+        user.isvoted = true;
         await user.save();
 
         return res.status(200).json({ message: 'Vote recorded successfully' });
@@ -123,32 +144,11 @@ router.get('/vote/:candidateID', jwtAuthMiddleware, async (req, res)=>{
     }
 });
 
-// vote count 
-router.get('/vote/count', async (req, res) => {
-    try{
-        // Find all candidates and sort them by voteCount in descending order
-        const candidate = await Candidate.find().sort({voteCount: 'desc'});
-
-        // Map the candidates to only return their name and voteCount
-        const voteRecord = candidate.map((data)=>{
-            return {
-                party: data.party,
-                count: data.voteCount
-            }
-        });
-
-        return res.status(200).json(voteRecord);
-    }catch(err){
-        console.log(err);
-        res.status(500).json({error: 'Internal Server Error'});
-    }
-});
-
 // Get List of all candidates with only name and party fields
 router.get('/', async (req, res) => {
     try {
-        // Find all candidates and select only the name and party fields, excluding _id
-        const candidates = await Candidate.find({}, 'name party -_id');
+        // Find all candidates and select only the name and party fields (keep _id for frontend)
+        const candidates = await Candidate.find({}, 'name party');
 
         // Return the list of candidates
         res.status(200).json(candidates);

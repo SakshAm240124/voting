@@ -1,0 +1,27 @@
+.candidate-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.candidate-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.candidate-name {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.party-badge {
+  background: var(--navy);
+  color: var(--white);
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}

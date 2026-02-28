@@ -1,0 +1,30 @@
+.results-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.results-total {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.results-card {
+  padding: 28px;
+}
+
+.results-note {
+  text-align: center;
+  color: var(--text-light);
+  font-size: 0.85rem;
+  margin-top: 16px;
+}
+
+.empty-msg {
+  text-align: center;
+  color: var(--text-light);
+  padding: 40px 0;
+}
